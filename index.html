@@ -84,15 +84,15 @@
             cell.className = "cell";
             cell.innerText = i;
             cell.id = "cell-" + i;
-                        if (ladder[i]) {
-                cell.classList.add("ladder-start");
-            } else if (Object.values(ladder).includes(i)) {
-                cell.classList.add("ladder-end");
-            } else if (snake[i]) {
-                cell.classList.add("snake-start");
-            } else if (Object.values(snake).includes(i)) {
-                cell.classList.add("snake-end");
-            }
+                        //if (ladder[i]) {
+                //cell.classList.add("ladder-start");
+           // } else if (Object.values(ladder).includes(i)) {
+             //   cell.classList.add("ladder-end");
+          //  } else if (snake[i]) {
+          //      cell.classList.add("snake-start");
+           // } else if (Object.values(snake).includes(i)) {
+           //     cell.classList.add("snake-end");
+          //  }
 
             board.appendChild(cell);
         }
@@ -101,7 +101,7 @@
 
      function createLines() {
         // Remove previous lines if any
-        //document.querySelectorAll(".snake-line, .ladder-line").forEach(line => line.remove());
+        document.querySelectorAll(".snake-line, .ladder-line").forEach(line => line.remove());
 
         // Draw ladders
         for (let start in ladder) {
@@ -132,12 +132,13 @@
         const endY = endCell.offsetTop + endCell.offsetHeight / 2;
 
         const distance = Math.hypot(endX - startX, endY - startY);
-        line.style.width = distance + "px";
+        //line.style.width = distance + "px";
 
         const angle = Math.atan2(endY - startY, endX - startX) * (180 / Math.PI);
+        line.style.width = `${distance}px`;
         line.style.transform = `rotate(${angle}deg)`;
-        line.style.left = startX + "px";
-        line.style.top = startY + "px";
+        line.style.left = `${startX}px`;
+        line.style.top = `${startY}px`;
         
         document.getElementById("game-container").appendChild(line);
     }
