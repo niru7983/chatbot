@@ -36,7 +36,6 @@
 
 <div id="game-container">
     <div id="board"></div>
-    <div id="overlay"></div>
     <div id="player1" class="player">1</div>
     <div id="player2" class="player">2</div>
 </div>
@@ -86,69 +85,45 @@
             cell.innerText = i;
             cell.id = "cell-" + i;
             if (ladder[i]) {
-                cell.classList.add("ladder-start");
-            } else if (Object.values(ladder).includes(i)) {
-                cell.classList.add("ladder-end");
-            } else if (snake[i]) {
-                cell.classList.add("snake-start");
-            } else if (Object.values(snake).includes(i)) {
-                cell.classList.add("snake-end");
-            }
-
+            cell.classList.add("ladder-start");
+            createLine(i, ladder[i], 'ladder'); // Create line for ladders
+        } else if (Object.values(ladder).includes(i)) {
+            cell.classList.add("ladder-end");
+        } else if (snake[i]) {
+            cell.classList.add("snake-start");
+            createLine(i, snake[i], 'snake'); // Create line for snakes
+        } else if (Object.values(snake).includes(i)) {
+            cell.classList.add("snake-end");
+        }
             board.appendChild(cell);
         }
-        createLines();
     }
-
-     function createLines() {
-        const overlay = document.getElementById("overlay");
-    overlay.innerHTML = "";
-
-        // Draw ladders
-        for (let start in ladder) {
-            const end = ladder[start];
-            drawLine("ladder", parseInt(start), end);
-        }
-
-        // Draw snakes
-        for (let start in snake) {
-            const end = snake[start];
-            drawLine("snake",parseInt(start), end);
-        }
-    }
-
-    function drawLine(type, start, end) {
-        const startCell = document.getElementById("cell-" + start);
-        const endCell = document.getElementById("cell-" + end);
-        
-        if (!startCell || !endCell) return; // In case of missing cells
-        
-        const line = document.createElement("div");
-        line.className = type === "ladder" ? "ladder-line" : "snake-line";
-
-        const startRect = startCell.getBoundingClientRect();
+    function createLine(start, end, type) {
+    const board = document.getElementById("board");
+    const startCell = document.getElementById("cell-" + start);
+    const endCell = document.getElementById("cell-" + end);
+    const line = document.createElement("div");
+    line.className = `${type}-line`;
+    
+    const startRect = startCell.getBoundingClientRect();
     const endRect = endCell.getBoundingClientRect();
 
-    const containerRect = document.getElementById("game-container").getBoundingClientRect();
-        
-        // Calculate line position and rotation
-        const startX = startCell.offsetLeft + startCell.offsetWidth / 2;
-        const startY = startCell.offsetTop + startCell.offsetHeight / 2;
-        const endX = endCell.offsetLeft + endCell.offsetWidth / 2;
-        const endY = endCell.offsetTop + endCell.offsetHeight / 2;
+    const left = startRect.left + startRect.width / 2;
+    const top = startRect.top + startRect.height / 2;
+    const width = endRect.left - startRect.left;
+    const height = endRect.top - startRect.top;
 
-        const distance = Math.hypot(endX - startX, endY - startY);
-        //line.style.width = distance + "px";
-
-        const angle = Math.atan2(endY - startY, endX - startX) * (180 / Math.PI);
-        line.style.width = `${distance}px`;
-        line.style.transform = `rotate(${angle}deg)`;
-        line.style.left = `${startX}px`;
-        line.style.top = `${startY}px`;
-        
-        //document.getElementById("overlay").appendChild(line);
-        overlay.appendChild(line);
-    }
+    line.style.position = 'absolute';
+    line.style.left = left + "px";
+    line.style.top = top + "px";
+    line.style.width = Math.abs(width) + "px";
+    line.style.height = Math.abs(height) + "px";
+    line.style.border = '2px dotted #000';
+    line.style.zIndex = -1; // To place the lines behind the cells
+    line.style.transform = `translateY(${height > 0 ? 0 : -height}px)`;
+    
+    board.appendChild(line);
+}
 
     function startGame() {
         p1_name = document.getElementById("p1_name").value || "Player 1";
