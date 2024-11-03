@@ -73,3 +73,19 @@
 #player2 {
     background-color: blue;
 }
+/* Rest of the existing CSS */
+
+.snake-line, .ladder-line {
+    position: absolute;
+    width: 5px;
+    background-color: #333; /* Default color */
+    z-index: 0;
+}
+
+.snake-line {
+    background-color: red;
+}
+
+.ladder-line {
+    background-color: green;
+}
