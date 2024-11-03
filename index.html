@@ -107,13 +107,13 @@
         // Draw ladders
         for (let start in ladder) {
             const end = ladder[start];
-            drawLine("ladder", start, end);
+            drawLine("ladder", parseInt(start), end);
         }
 
         // Draw snakes
         for (let start in snake) {
             const end = snake[start];
-            drawLine("snake", start, end);
+            drawLine("snake",parseInt(start), end);
         }
     }
 
@@ -125,6 +125,11 @@
         
         const line = document.createElement("div");
         line.className = type === "ladder" ? "ladder-line" : "snake-line";
+
+        const startRect = startCell.getBoundingClientRect();
+    const endRect = endCell.getBoundingClientRect();
+
+    const containerRect = document.getElementById("game-container").getBoundingClientRect();
         
         // Calculate line position and rotation
         const startX = startCell.offsetLeft + startCell.offsetWidth / 2;
@@ -141,7 +146,8 @@
         line.style.left = `${startX}px`;
         line.style.top = `${startY}px`;
         
-        document.getElementById("overlay").appendChild(line);
+        //document.getElementById("overlay").appendChild(line);
+        overlay.appendChild(line);
     }
 
     function startGame() {
