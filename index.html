@@ -36,6 +36,7 @@
 
 <div id="game-container">
     <div id="board"></div>
+    <div id="overlay"></div>
     <div id="player1" class="player">1</div>
     <div id="player2" class="player">2</div>
 </div>
@@ -100,8 +101,8 @@
     }
 
      function createLines() {
-        // Remove previous lines if any
-        document.querySelectorAll(".snake-line, .ladder-line").forEach(line => line.remove());
+        const overlay = document.getElementById("overlay");
+    overlay.innerHTML = "";
 
         // Draw ladders
         for (let start in ladder) {
@@ -140,7 +141,7 @@
         line.style.left = `${startX}px`;
         line.style.top = `${startY}px`;
         
-        document.getElementById("game-container").appendChild(line);
+        document.getElementById("overlay").appendChild(line);
     }
 
     function startGame() {
