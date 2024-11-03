@@ -84,6 +84,15 @@
             cell.className = "cell";
             cell.innerText = i;
             cell.id = "cell-" + i;
+                        if (ladder[i]) {
+                cell.classList.add("ladder-start");
+            } else if (Object.values(ladder).includes(i)) {
+                cell.classList.add("ladder-end");
+            } else if (snake[i]) {
+                cell.classList.add("snake-start");
+            } else if (Object.values(snake).includes(i)) {
+                cell.classList.add("snake-end");
+            }
 
             board.appendChild(cell);
         }
@@ -92,7 +101,7 @@
 
      function createLines() {
         // Remove previous lines if any
-        document.querySelectorAll(".snake-line, .ladder-line").forEach(line => line.remove());
+        //document.querySelectorAll(".snake-line, .ladder-line").forEach(line => line.remove());
 
         // Draw ladders
         for (let start in ladder) {
