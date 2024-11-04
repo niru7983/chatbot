@@ -73,8 +73,3 @@
 #player2 {
     background-color: blue;
 }
-.ladder-line, .snake-line {
-    position: absolute;
-    border: 2px dotted #000; /* Dotted lines for both */
-    z-index: -1; /* Place behind cells */
-}
