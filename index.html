@@ -85,45 +85,17 @@
             cell.innerText = i;
             cell.id = "cell-" + i;
             if (ladder[i]) {
-            cell.classList.add("ladder-start");
-            createLine(i, ladder[i], 'ladder'); // Create line for ladders
-        } else if (Object.values(ladder).includes(i)) {
-            cell.classList.add("ladder-end");
-        } else if (snake[i]) {
-            cell.classList.add("snake-start");
-            createLine(i, snake[i], 'snake'); // Create line for snakes
-        } else if (Object.values(snake).includes(i)) {
-            cell.classList.add("snake-end");
-        }
+                cell.classList.add("ladder-start");
+            } else if (Object.values(ladder).includes(i)) {
+                cell.classList.add("ladder-end");
+            } else if (snake[i]) {
+                cell.classList.add("snake-start");
+            } else if (Object.values(snake).includes(i)) {
+                cell.classList.add("snake-end");
+            }
             board.appendChild(cell);
         }
     }
-    function createLine(start, end, type) {
-    const board = document.getElementById("board");
-    const startCell = document.getElementById("cell-" + start);
-    const endCell = document.getElementById("cell-" + end);
-    const line = document.createElement("div");
-    line.className = `${type}-line`;
-    
-    const startRect = startCell.getBoundingClientRect();
-    const endRect = endCell.getBoundingClientRect();
-
-    const left = startRect.left + startRect.width / 2;
-    const top = startRect.top + startRect.height / 2;
-    const width = endRect.left - startRect.left;
-    const height = endRect.top - startRect.top;
-
-    line.style.position = 'absolute';
-    line.style.left = left + "px";
-    line.style.top = top + "px";
-    line.style.width = Math.abs(width) + "px";
-    line.style.height = Math.abs(height) + "px";
-    line.style.border = '2px dotted #000';
-    line.style.zIndex = -1; // To place the lines behind the cells
-    line.style.transform = `translateY(${height > 0 ? 0 : -height}px)`;
-    
-    board.appendChild(line);
-}
 
     function startGame() {
         p1_name = document.getElementById("p1_name").value || "Player 1";
